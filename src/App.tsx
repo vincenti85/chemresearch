@@ -5,6 +5,7 @@ import { OverviewTab } from './components/tabs/OverviewTab';
 import { MonitoringTab } from './components/tabs/MonitoringTab';
 import { ViolationsTab } from './components/tabs/ViolationsTab';
 import { CommunityTab } from './components/tabs/CommunityTab';
+import { DataGuideTab } from './components/tabs/DataGuideTab';
 import { AdminTab } from './components/tabs/AdminTab';
 import { useAppStore } from './store';
 import { useCurriculum } from './hooks/useCurriculum';
@@ -25,6 +26,7 @@ function App() {
           {currentTab === 'monitoring' && <MonitoringTab />}
           {currentTab === 'violations' && <ViolationsTab />}
           {currentTab === 'community' && <CommunityTab />}
+          {currentTab === 'data-guide' && <DataGuideTab />}
           {currentTab === 'admin' && <AdminTab />}
         </div>
       </main>

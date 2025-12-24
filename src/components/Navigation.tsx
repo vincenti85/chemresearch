@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { LayoutDashboard, Activity, AlertCircle, Users, Settings, ChevronDown, Beaker, Database, Eye } from 'lucide-react';
+import { LayoutDashboard, Activity, AlertCircle, Users, Settings, ChevronDown, Beaker, Database, Eye, BookOpen } from 'lucide-react';
 import { useAppStore } from '../store';
 import type { APChemUnit } from '../types';
 
@@ -8,6 +8,7 @@ const tabs = [
   { id: 'monitoring', label: 'Monitoring', icon: Activity },
   { id: 'violations', label: 'Violations', icon: AlertCircle },
   { id: 'community', label: 'Community', icon: Users },
+  { id: 'data-guide', label: 'Data Guide', icon: BookOpen },
 ] as const;
 
 const getModuleForMetric = (metric: string): 'cokewatch' | 'pfas' | 'carbon' => {

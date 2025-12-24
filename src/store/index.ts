@@ -12,7 +12,7 @@ import type {
 } from '../types';
 
 interface AppState {
-  currentTab: 'overview' | 'monitoring' | 'violations' | 'community' | 'admin';
+  currentTab: 'overview' | 'monitoring' | 'violations' | 'community' | 'data-guide' | 'admin';
   timeRange: TimeRange;
   pollutionData: PollutionData[];
   violations: Violation[];
