@@ -1,5 +1,7 @@
 import { Users, FileText, MessageSquare, TrendingUp, MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { ReportSubmissionForm } from '../forms/ReportSubmissionForm';
+import { useAppStore } from '../../store';
 
 const mockReports = [
   {
@@ -46,6 +48,9 @@ const reportTypes = [
 ];
 
 export function CommunityTab() {
+  const isReportFormOpen = useAppStore((state) => state.isReportFormOpen);
+  const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
+
   const getTypeIcon = (type: string) => {
     const icons: Record<string, string> = {
       odor: '👃',
@@ -68,6 +73,10 @@ export function CommunityTab() {
       default:
         return 'text-gray-500 bg-gray-900/20';
     }
+  };
+
+  const handleReportSuccess = () => {
+    alert('Report submitted successfully! Thank you for helping protect our environment.');
   };
 
   return (
@@ -213,10 +222,19 @@ export function CommunityTab() {
           Your observations matter. Help document environmental issues in your community and contribute
           to a healthier Alabama for everyone.
         </p>
-        <button className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+        <button
+          onClick={() => setIsReportFormOpen(true)}
+          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        >
           Create New Report
         </button>
       </div>
+
+      <ReportSubmissionForm
+        isOpen={isReportFormOpen}
+        onClose={() => setIsReportFormOpen(false)}
+        onSuccess={handleReportSuccess}
+      />
     </div>
   );
 }

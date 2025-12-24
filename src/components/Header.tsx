@@ -4,6 +4,7 @@ import { formatNumber } from '../utils/format';
 
 export function Header() {
   const userStats = useAppStore((state) => state.userStats);
+  const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
 
   return (
     <header className="bg-dark-900 border-b border-dark-700">
@@ -34,7 +35,10 @@ export function Header() {
               </div>
             </div>
 
-            <button className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+            <button
+              onClick={() => setIsReportFormOpen(true)}
+              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
               Report Issue
             </button>
           </div>
