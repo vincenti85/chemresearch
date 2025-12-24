@@ -7,13 +7,20 @@ import { ViolationsTab } from './components/tabs/ViolationsTab';
 import { CommunityTab } from './components/tabs/CommunityTab';
 import { DataGuideTab } from './components/tabs/DataGuideTab';
 import { AdminTab } from './components/tabs/AdminTab';
+import { ReportSubmissionForm } from './components/forms/ReportSubmissionForm';
 import { useAppStore } from './store';
 import { useCurriculum } from './hooks/useCurriculum';
 
 function App() {
   const currentTab = useAppStore((state) => state.currentTab);
+  const isReportFormOpen = useAppStore((state) => state.isReportFormOpen);
+  const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
 
   useCurriculum();
+
+  const handleReportSuccess = () => {
+    alert('Report submitted successfully! Thank you for helping protect our environment.');
+  };
 
   return (
     <div className="min-h-screen bg-dark-950 flex flex-col">
@@ -32,6 +39,12 @@ function App() {
       </main>
 
       <Footer />
+
+      <ReportSubmissionForm
+        isOpen={isReportFormOpen}
+        onClose={() => setIsReportFormOpen(false)}
+        onSuccess={handleReportSuccess}
+      />
     </div>
   );
 }

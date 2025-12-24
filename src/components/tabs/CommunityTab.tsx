@@ -1,6 +1,5 @@
 import { Users, FileText, MessageSquare, TrendingUp, MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { ReportSubmissionForm } from '../forms/ReportSubmissionForm';
 import { useAppStore } from '../../store';
 
 const mockReports = [
@@ -48,7 +47,6 @@ const reportTypes = [
 ];
 
 export function CommunityTab() {
-  const isReportFormOpen = useAppStore((state) => state.isReportFormOpen);
   const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
 
   const getTypeIcon = (type: string) => {
@@ -73,10 +71,6 @@ export function CommunityTab() {
       default:
         return 'text-gray-500 bg-gray-900/20';
     }
-  };
-
-  const handleReportSuccess = () => {
-    alert('Report submitted successfully! Thank you for helping protect our environment.');
   };
 
   return (
@@ -229,12 +223,6 @@ export function CommunityTab() {
           Create New Report
         </button>
       </div>
-
-      <ReportSubmissionForm
-        isOpen={isReportFormOpen}
-        onClose={() => setIsReportFormOpen(false)}
-        onSuccess={handleReportSuccess}
-      />
     </div>
   );
 }
