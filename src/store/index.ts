@@ -28,6 +28,7 @@ interface AppState {
   isAdminMode: boolean;
   activeMonitoringModule: 'cokewatch' | 'pfas' | 'carbon';
   isReportFormOpen: boolean;
+  showLandingPage: boolean;
 
   setCurrentTab: (tab: AppState['currentTab']) => void;
   setTimeRange: (range: TimeRange) => void;
@@ -45,6 +46,7 @@ interface AppState {
   setIsAdminMode: (isAdmin: boolean) => void;
   setActiveMonitoringModule: (module: AppState['activeMonitoringModule']) => void;
   setIsReportFormOpen: (isOpen: boolean) => void;
+  setShowLandingPage: (show: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -69,6 +71,7 @@ export const useAppStore = create<AppState>((set) => ({
   isAdminMode: false,
   activeMonitoringModule: 'cokewatch',
   isReportFormOpen: false,
+  showLandingPage: true,
 
   setCurrentTab: (tab) => set({ currentTab: tab }),
   setTimeRange: (range) => set({ timeRange: range }),
@@ -86,4 +89,5 @@ export const useAppStore = create<AppState>((set) => ({
   setIsAdminMode: (isAdmin) => set({ isAdminMode: isAdmin }),
   setActiveMonitoringModule: (module) => set({ activeMonitoringModule: module }),
   setIsReportFormOpen: (isOpen) => set({ isReportFormOpen: isOpen }),
+  setShowLandingPage: (show) => set({ showLandingPage: show }),
 }));

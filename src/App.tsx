@@ -7,6 +7,7 @@ import { ViolationsTab } from './components/tabs/ViolationsTab';
 import { CommunityTab } from './components/tabs/CommunityTab';
 import { DataGuideTab } from './components/tabs/DataGuideTab';
 import { AdminTab } from './components/tabs/AdminTab';
+import { LandingPage } from './components/LandingPage';
 import { ReportSubmissionForm } from './components/forms/ReportSubmissionForm';
 import { useAppStore } from './store';
 import { useCurriculum } from './hooks/useCurriculum';
@@ -15,12 +16,26 @@ function App() {
   const currentTab = useAppStore((state) => state.currentTab);
   const isReportFormOpen = useAppStore((state) => state.isReportFormOpen);
   const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
+  const showLandingPage = useAppStore((state) => state.showLandingPage);
 
   useCurriculum();
 
   const handleReportSuccess = () => {
     alert('Report submitted successfully! Thank you for helping protect our environment.');
   };
+
+  if (showLandingPage) {
+    return (
+      <>
+        <LandingPage />
+        <ReportSubmissionForm
+          isOpen={isReportFormOpen}
+          onClose={() => setIsReportFormOpen(false)}
+          onSuccess={handleReportSuccess}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-dark-950 flex flex-col">
