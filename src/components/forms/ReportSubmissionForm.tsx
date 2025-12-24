@@ -14,8 +14,6 @@ import {
   Plus,
   Minus,
   User,
-  Mail,
-  Phone,
   Save,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';

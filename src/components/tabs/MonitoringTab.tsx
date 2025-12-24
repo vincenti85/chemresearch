@@ -2,7 +2,7 @@ import { CokeWatch } from '../modules/CokeWatch';
 import { PFASCheck } from '../modules/PFASCheck';
 import { CarbonSinkAL } from '../modules/CarbonSinkAL';
 import { useAppStore } from '../../store';
-import { Sparkles, TrendingUp } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useMemo } from 'react';
 
 export function MonitoringTab() {

@@ -22,7 +22,7 @@ export function EducationalWidget({ targetMetric, children, className = '' }: Ed
   const isHighlighted = highlightedMetric === targetMetric;
   const hasEducationalContent = activeUnit && educationalContent;
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = () => {
     if (hasEducationalContent) {
       const rect = wrapperRef.current?.getBoundingClientRect();
       if (rect) {

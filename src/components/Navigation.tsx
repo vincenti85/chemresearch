@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { LayoutDashboard, Activity, AlertCircle, Users, Settings, ChevronDown, Beaker, Database, Eye, BookOpen } from 'lucide-react';
 import { useAppStore } from '../store';
 import type { APChemUnit } from '../types';

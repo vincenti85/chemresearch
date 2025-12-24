@@ -15,7 +15,6 @@ import { useAppStore } from '../store';
 
 export function LandingPage() {
   const setShowLandingPage = useAppStore((state) => state.setShowLandingPage);
-  const setCurrentTab = useAppStore((state) => state.setCurrentTab);
   const setIsReportFormOpen = useAppStore((state) => state.setIsReportFormOpen);
 
   const handleEnterApp = () => {
