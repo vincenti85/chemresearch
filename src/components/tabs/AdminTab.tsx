@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Database, Beaker, Save, RefreshCw, Plus, ExternalLink } from 'lucide-react';
+import { Database, Beaker, Save, RefreshCw, Plus, ExternalLink, AlertTriangle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { AddCurriculumMappingForm } from '../forms/AddCurriculumMappingForm';
 import { useAppStore } from '../../store';
@@ -22,6 +22,7 @@ export function AdminTab() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [groupByUnit, setGroupByUnit] = useState(false);
 
@@ -37,6 +38,7 @@ export function AdminTab() {
   const fetchCurriculumMappings = async () => {
     try {
       setIsLoading(true);
+      setErrorMessage('');
       const { data, error } = await supabase
         .from('curriculum_mapping')
         .select('*')
@@ -45,7 +47,9 @@ export function AdminTab() {
       if (error) throw error;
       setCurriculumMappings(data as CurriculumMapping[]);
     } catch (error) {
-      console.error('Error fetching curriculum mappings:', error);
+      const message = error instanceof Error ? error.message : 'Failed to fetch curriculum mappings';
+      setErrorMessage(message);
+      setTimeout(() => setErrorMessage(''), 5000);
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +58,7 @@ export function AdminTab() {
   const toggleMappingActive = async (id: string, currentState: boolean) => {
     try {
       setIsSaving(true);
+      setErrorMessage('');
       const { error } = await supabase
         .from('curriculum_mapping')
         .update({ is_active: !currentState })
@@ -70,7 +75,9 @@ export function AdminTab() {
       setSuccessMessage('Mapping updated successfully');
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
-      console.error('Error updating mapping:', error);
+      const message = error instanceof Error ? error.message : 'Failed to update mapping';
+      setErrorMessage(message);
+      setTimeout(() => setErrorMessage(''), 5000);
     } finally {
       setIsSaving(false);
     }
@@ -116,6 +123,13 @@ export function AdminTab() {
         <div className="bg-primary-900/30 border border-primary-600 rounded-lg p-4 flex items-center space-x-3">
           <Save className="w-5 h-5 text-primary-500" />
           <span className="text-primary-400 font-medium">{successMessage}</span>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="bg-red-900/30 border border-red-600 rounded-lg p-4 flex items-center space-x-3">
+          <AlertTriangle className="w-5 h-5 text-red-500" />
+          <span className="text-red-400 font-medium">{errorMessage}</span>
         </div>
       )}
 
