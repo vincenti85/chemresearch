@@ -1,0 +1,40 @@
+{
+  "lastSync": "2026-01-06T00:00:00Z",
+  "agents": {
+    "taskmaster": {
+      "status": "idle",
+      "currentTask": null,
+      "lastUpdate": "2026-01-06T00:00:00Z",
+      "blockedBy": null,
+      "blockingOthers": []
+    },
+    "db-architect": {
+      "status": "idle",
+      "currentTask": null,
+      "lastUpdate": "2026-01-06T00:00:00Z",
+      "blockedBy": null,
+      "blockingOthers": []
+    },
+    "api-hunter": {
+      "status": "idle",
+      "currentTask": null,
+      "lastUpdate": "2026-01-06T00:00:00Z",
+      "blockedBy": null,
+      "blockingOthers": []
+    },
+    "ui-auditor": {
+      "status": "idle",
+      "currentTask": null,
+      "lastUpdate": "2026-01-06T00:00:00Z",
+      "blockedBy": null,
+      "blockingOthers": []
+    },
+    "version-manager": {
+      "status": "idle",
+      "currentTask": null,
+      "lastUpdate": "2026-01-06T00:00:00Z",
+      "blockedBy": null,
+      "blockingOthers": []
+    }
+  }
+}

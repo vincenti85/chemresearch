@@ -1,0 +1,71 @@
+{
+  "project": "ChemResearch v2.0",
+  "sprint": "2026-01-06 to 2026-01-10",
+  "columns": {
+    "backlog": [
+      {
+        "id": "task-001",
+        "title": "Implement dark mode",
+        "priority": "LOW",
+        "estimatedHours": 8,
+        "assignedTo": null,
+        "dependencies": [],
+        "tags": ["ui", "enhancement"]
+      },
+      {
+        "id": "task-002",
+        "title": "Add user authentication",
+        "priority": "MEDIUM",
+        "estimatedHours": 16,
+        "assignedTo": null,
+        "dependencies": [],
+        "tags": ["security", "feature"]
+      }
+    ],
+    "todo": [
+      {
+        "id": "task-003",
+        "title": "Complete violations table schema",
+        "priority": "HIGH",
+        "estimatedHours": 3,
+        "assignedTo": "db-architect",
+        "dependencies": [],
+        "createdAt": "2026-01-06T09:00:00Z",
+        "tags": ["database", "violations"]
+      },
+      {
+        "id": "task-004",
+        "title": "Implement EPA API retry logic",
+        "priority": "HIGH",
+        "estimatedHours": 2,
+        "assignedTo": "api-hunter",
+        "dependencies": [],
+        "createdAt": "2026-01-06T09:00:00Z",
+        "tags": ["api", "reliability"]
+      },
+      {
+        "id": "task-005",
+        "title": "Fix Navigation dummy links",
+        "priority": "HIGH",
+        "estimatedHours": 1,
+        "assignedTo": "ui-auditor",
+        "dependencies": [],
+        "createdAt": "2026-01-06T09:00:00Z",
+        "tags": ["ui", "navigation"]
+      },
+      {
+        "id": "task-006",
+        "title": "Apply security patches",
+        "priority": "HIGH",
+        "estimatedHours": 1,
+        "assignedTo": "version-manager",
+        "dependencies": [],
+        "createdAt": "2026-01-06T09:00:00Z",
+        "tags": ["security", "dependencies"]
+      }
+    ],
+    "in_progress": [],
+    "review": [],
+    "done": []
+  }
+}
