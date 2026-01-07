@@ -1,71 +1,219 @@
 {
   "project": "ChemResearch v2.0",
-  "sprint": "2026-01-06 to 2026-01-10",
+  "sprint": "2026-01-06 to 2026-01-10 (Week 1 - Core Infrastructure)",
+  "updated": "2026-01-06T14:30:00Z",
   "columns": {
     "backlog": [
       {
-        "id": "task-001",
-        "title": "Implement dark mode",
-        "priority": "LOW",
-        "estimatedHours": 8,
-        "assignedTo": null,
-        "dependencies": [],
-        "tags": ["ui", "enhancement"]
-      },
-      {
-        "id": "task-002",
-        "title": "Add user authentication",
+        "id": "task-201",
+        "title": "커뮤니티 리포트 시스템 구현",
         "priority": "MEDIUM",
         "estimatedHours": 16,
         "assignedTo": null,
-        "dependencies": [],
-        "tags": ["security", "feature"]
+        "dependencies": ["task-001"],
+        "phase": 3,
+        "tags": ["community", "feature"]
+      },
+      {
+        "id": "task-202",
+        "title": "검색 및 필터링 기능",
+        "priority": "LOW",
+        "estimatedHours": 8,
+        "assignedTo": null,
+        "dependencies": ["task-001"],
+        "phase": 3,
+        "tags": ["ui", "enhancement"]
+      },
+      {
+        "id": "task-203",
+        "title": "데이터 내보내기 (CSV, PDF)",
+        "priority": "LOW",
+        "estimatedHours": 8,
+        "assignedTo": null,
+        "dependencies": ["task-001", "task-002"],
+        "phase": 3,
+        "tags": ["export", "feature"]
       }
     ],
     "todo": [
       {
-        "id": "task-003",
-        "title": "Complete violations table schema",
-        "priority": "HIGH",
-        "estimatedHours": 3,
+        "id": "task-001",
+        "title": "데이터베이스 스키마 설계 및 마이그레이션 (16개 테이블)",
+        "priority": "CRITICAL",
+        "estimatedHours": 16,
         "assignedTo": "db-architect",
         "dependencies": [],
-        "createdAt": "2026-01-06T09:00:00Z",
-        "tags": ["database", "violations"]
+        "createdAt": "2026-01-06T14:30:00Z",
+        "phase": 1,
+        "tags": ["database", "critical", "infrastructure"],
+        "subtasks": [
+          "migrations/ 디렉토리 생성",
+          "citizen_reports 테이블 (우선)",
+          "environmental_violations 테이블 (우선)",
+          "air_quality_data 테이블 (우선)",
+          "water_quality_data 테이블 (우선)",
+          "나머지 12개 테이블",
+          "RLS 정책 작성",
+          "database.types.ts 생성",
+          "시딩 데이터 준비"
+        ]
+      },
+      {
+        "id": "task-002",
+        "title": "API 서비스 레이어 구축 (4개 API 클라이언트)",
+        "priority": "CRITICAL",
+        "estimatedHours": 24,
+        "assignedTo": "api-hunter",
+        "dependencies": [],
+        "createdAt": "2026-01-06T14:30:00Z",
+        "phase": 1,
+        "tags": ["api", "critical", "infrastructure"],
+        "subtasks": [
+          "src/services/ 디렉토리 생성",
+          "airnow-api.ts (AirNow API)",
+          "usgs-water-api.ts (USGS)",
+          "epa-echo-api.ts (EPA 위반)",
+          "weather-api.ts (NWS)",
+          "api-cache.ts (캐싱 로직)",
+          "api-retry.ts (재시도 로직)",
+          "api-error.ts (에러 핸들링)",
+          ".env 환경 변수 설정",
+          "API 연결 테스트"
+        ]
+      },
+      {
+        "id": "task-003",
+        "title": "더미 연결 수정 (5개)",
+        "priority": "HIGH",
+        "estimatedHours": 8,
+        "assignedTo": "ui-auditor",
+        "dependencies": [],
+        "createdAt": "2026-01-06T14:30:00Z",
+        "phase": 1,
+        "tags": ["ui", "dummy-fix", "high-priority"],
+        "subtasks": [
+          "Footer: Legal Rights Guide 페이지 생성",
+          "Footer: Community Action Toolkit 페이지 생성",
+          "ViolationDetailModal.tsx 생성",
+          "CommunityReportDetailModal.tsx 생성",
+          "ViolationsTab: View Details 버튼 연결",
+          "CommunityTab: Details 버튼 연결",
+          "OverviewTab: View Details 버튼 확인 및 연결"
+        ]
       },
       {
         "id": "task-004",
-        "title": "Implement EPA API retry logic",
+        "title": "의존성 점검 및 보안 패치",
         "priority": "HIGH",
         "estimatedHours": 2,
-        "assignedTo": "api-hunter",
-        "dependencies": [],
-        "createdAt": "2026-01-06T09:00:00Z",
-        "tags": ["api", "reliability"]
-      },
-      {
-        "id": "task-005",
-        "title": "Fix Navigation dummy links",
-        "priority": "HIGH",
-        "estimatedHours": 1,
-        "assignedTo": "ui-auditor",
-        "dependencies": [],
-        "createdAt": "2026-01-06T09:00:00Z",
-        "tags": ["ui", "navigation"]
-      },
-      {
-        "id": "task-006",
-        "title": "Apply security patches",
-        "priority": "HIGH",
-        "estimatedHours": 1,
         "assignedTo": "version-manager",
         "dependencies": [],
-        "createdAt": "2026-01-06T09:00:00Z",
+        "createdAt": "2026-01-06T14:30:00Z",
+        "phase": 1,
         "tags": ["security", "dependencies"]
+      },
+      {
+        "id": "task-101",
+        "title": "실시간 데이터 수집 자동화",
+        "priority": "HIGH",
+        "estimatedHours": 16,
+        "assignedTo": "api-hunter",
+        "dependencies": ["task-001", "task-002"],
+        "phase": 2,
+        "tags": ["api", "automation"],
+        "subtasks": [
+          "AirNow 데이터 수집 (15분마다)",
+          "USGS 수질 데이터 (1시간마다)",
+          "EPA 위반 데이터 (일일)",
+          "날씨 데이터 (1시간마다)",
+          "Supabase 저장 로직",
+          "에러 로깅 시스템"
+        ]
+      },
+      {
+        "id": "task-102",
+        "title": "데이터 시각화 개선 (더미 데이터 → 실제 DB)",
+        "priority": "MEDIUM",
+        "estimatedHours": 16,
+        "assignedTo": "ui-auditor",
+        "dependencies": ["task-001", "task-002"],
+        "phase": 2,
+        "tags": ["ui", "data-binding"],
+        "subtasks": [
+          "더미 데이터 제거",
+          "실제 DB 쿼리로 교체",
+          "차트 데이터 바인딩",
+          "로딩 상태 UI",
+          "에러 상태 UI",
+          "빈 데이터 상태 UI"
+        ]
+      },
+      {
+        "id": "task-103",
+        "title": "모듈 데이터 연동 (PFAS, CokeWatch, CarbonSink)",
+        "priority": "MEDIUM",
+        "estimatedHours": 24,
+        "assignedTo": null,
+        "dependencies": ["task-001", "task-002"],
+        "phase": 2,
+        "tags": ["modules", "data-integration"],
+        "collaboration": ["db-architect", "api-hunter"]
       }
     ],
     "in_progress": [],
     "review": [],
-    "done": []
+    "done": [
+      {
+        "id": "task-000",
+        "title": "멀티 에이전트 시스템 구축",
+        "priority": "CRITICAL",
+        "estimatedHours": 8,
+        "assignedTo": "taskmaster",
+        "dependencies": [],
+        "completedAt": "2026-01-06T14:00:00Z",
+        "phase": 0,
+        "tags": ["infrastructure", "setup"]
+      }
+    ]
+  },
+  "metrics": {
+    "totalTasks": 11,
+    "completed": 1,
+    "inProgress": 0,
+    "todo": 7,
+    "backlog": 3,
+    "completionRate": "9%",
+    "estimatedTotalHours": 146,
+    "estimatedWeek1Hours": 50
+  },
+  "phases": {
+    "phase0": {
+      "name": "멀티 에이전트 설정",
+      "status": "completed",
+      "progress": "100%"
+    },
+    "phase1": {
+      "name": "핵심 인프라 구축",
+      "status": "ready",
+      "progress": "0%",
+      "week": 1,
+      "tasks": 4
+    },
+    "phase2": {
+      "name": "데이터 통합",
+      "status": "blocked",
+      "progress": "0%",
+      "week": 2,
+      "tasks": 3,
+      "blockedBy": "phase1"
+    },
+    "phase3": {
+      "name": "고급 기능",
+      "status": "planned",
+      "progress": "0%",
+      "week": 3,
+      "tasks": 3,
+      "blockedBy": "phase2"
+    }
   }
 }
