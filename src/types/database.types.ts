@@ -212,6 +212,193 @@ export interface ViolationSummary {
 }
 
 // ============================================================================
+// AIR QUALITY DATA
+// ============================================================================
+
+export type AQICategory =
+  | 'good'
+  | 'moderate'
+  | 'unhealthy_sensitive'
+  | 'unhealthy'
+  | 'very_unhealthy'
+  | 'hazardous';
+
+export type PollutantType = 'pm25' | 'pm10' | 'o3' | 'no2' | 'so2' | 'co';
+
+export type AirDataSource =
+  | 'airnow_api'
+  | 'epa_sensor'
+  | 'purpleair'
+  | 'manual_reading'
+  | 'weather_station'
+  | 'other';
+
+export type MeasurementStatus = 'validated' | 'preliminary' | 'flagged' | 'invalid';
+
+/**
+ * Air quality measurements from monitoring stations and sensors
+ */
+export interface AirQualityData {
+  id: string;
+
+  // Monitoring site
+  site_name: string | null;
+  site_id: string | null;
+  agency: string | null;
+
+  // Location
+  latitude: number;
+  longitude: number;
+  elevation_meters: number | null;
+  city: string | null;
+  state: string;
+  zip_code: string | null;
+
+  // Temporal information
+  measurement_timestamp: string;
+  local_time_zone: string;
+  averaging_period: string;
+
+  // Air Quality Index
+  aqi: number | null;
+  aqi_category: AQICategory | null;
+  primary_pollutant: PollutantType | null;
+
+  // Individual pollutants
+  pm25_concentration: number | null;
+  pm25_aqi: number | null;
+
+  pm10_concentration: number | null;
+  pm10_aqi: number | null;
+
+  ozone_concentration: number | null;
+  ozone_aqi: number | null;
+
+  no2_concentration: number | null;
+  no2_aqi: number | null;
+
+  so2_concentration: number | null;
+  so2_aqi: number | null;
+
+  co_concentration: number | null;
+  co_aqi: number | null;
+
+  // Environmental context
+  temperature_celsius: number | null;
+  relative_humidity: number | null;
+  wind_speed_mph: number | null;
+  wind_direction: number | null;
+  barometric_pressure_mb: number | null;
+
+  // Data quality and metadata
+  data_source: AirDataSource;
+  source_url: string | null;
+  measurement_status: MeasurementStatus;
+  quality_control_flags: string[] | null;
+
+  // Health advisory
+  health_message: string | null;
+  action_day: boolean;
+
+  // Raw data storage
+  raw_data: Record<string, any> | null;
+
+  // Timestamps
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Type for inserting new air quality data
+ */
+export type AirQualityDataInsert = Omit<
+  AirQualityData,
+  'id' | 'created_at' | 'updated_at'
+> & {
+  id?: string;
+  site_name?: string | null;
+  site_id?: string | null;
+  agency?: string | null;
+  elevation_meters?: number | null;
+  city?: string | null;
+  state?: string;
+  zip_code?: string | null;
+  local_time_zone?: string;
+  averaging_period?: string;
+  aqi?: number | null;
+  aqi_category?: AQICategory | null;
+  primary_pollutant?: PollutantType | null;
+  pm25_concentration?: number | null;
+  pm25_aqi?: number | null;
+  pm10_concentration?: number | null;
+  pm10_aqi?: number | null;
+  ozone_concentration?: number | null;
+  ozone_aqi?: number | null;
+  no2_concentration?: number | null;
+  no2_aqi?: number | null;
+  so2_concentration?: number | null;
+  so2_aqi?: number | null;
+  co_concentration?: number | null;
+  co_aqi?: number | null;
+  temperature_celsius?: number | null;
+  relative_humidity?: number | null;
+  wind_speed_mph?: number | null;
+  wind_direction?: number | null;
+  barometric_pressure_mb?: number | null;
+  source_url?: string | null;
+  measurement_status?: MeasurementStatus;
+  quality_control_flags?: string[] | null;
+  health_message?: string | null;
+  action_day?: boolean;
+  raw_data?: Record<string, any> | null;
+};
+
+/**
+ * Type for updating air quality data
+ */
+export type AirQualityDataUpdate = Partial<
+  Omit<AirQualityData, 'id' | 'created_at' | 'updated_at'>
+>;
+
+/**
+ * Current air quality summary (for map display)
+ */
+export interface CurrentAirQuality {
+  id: string;
+  site_name: string | null;
+  site_id: string | null;
+  city: string | null;
+  latitude: number;
+  longitude: number;
+  measurement_timestamp: string;
+  aqi: number | null;
+  aqi_category: AQICategory | null;
+  primary_pollutant: PollutantType | null;
+  pm25_concentration: number | null;
+  ozone_concentration: number | null;
+  temperature_celsius: number | null;
+  data_source: AirDataSource;
+}
+
+/**
+ * Daily air quality summary
+ */
+export interface DailyAirQualitySummary {
+  site_id: string | null;
+  site_name: string | null;
+  city: string | null;
+  measurement_date: string;
+  avg_aqi: number | null;
+  max_aqi: number | null;
+  min_aqi: number | null;
+  avg_pm25: number | null;
+  max_pm25: number | null;
+  avg_ozone: number | null;
+  max_ozone: number | null;
+  reading_count: number;
+}
+
+// ============================================================================
 // DATABASE SCHEMA TYPE (for Supabase client)
 // ============================================================================
 
@@ -227,6 +414,11 @@ export interface Database {
         Row: EnvironmentalViolation;
         Insert: EnvironmentalViolationInsert;
         Update: EnvironmentalViolationUpdate;
+      };
+      air_quality_data: {
+        Row: AirQualityData;
+        Insert: AirQualityDataInsert;
+        Update: AirQualityDataUpdate;
       };
     };
     Views: {
@@ -260,9 +452,44 @@ export interface Database {
           | 'status'
         >;
       };
+      current_air_quality: {
+        Row: CurrentAirQuality;
+      };
+      unhealthy_air_quality: {
+        Row: Pick<
+          AirQualityData,
+          | 'site_name'
+          | 'city'
+          | 'measurement_timestamp'
+          | 'aqi'
+          | 'aqi_category'
+          | 'primary_pollutant'
+          | 'pm25_concentration'
+          | 'ozone_concentration'
+          | 'latitude'
+          | 'longitude'
+        >;
+      };
+      daily_air_quality_summary: {
+        Row: DailyAirQualitySummary;
+      };
+      recent_action_days: {
+        Row: Pick<
+          AirQualityData,
+          | 'city'
+          | 'measurement_timestamp'
+          | 'aqi'
+          | 'aqi_category'
+          | 'primary_pollutant'
+          | 'health_message'
+        >;
+      };
     };
     Functions: {
-      // Functions will be added here
+      calculate_aqi_category: {
+        Args: { aqi_value: number | null };
+        Returns: AQICategory | null;
+      };
     };
     Enums: {
       report_type_enum: ReportType;
@@ -271,6 +498,10 @@ export interface Database {
       violation_type_enum: ViolationType;
       violation_status_enum: ViolationStatus;
       violation_severity_enum: ViolationSeverity;
+      aqi_category_enum: AQICategory;
+      pollutant_type_enum: PollutantType;
+      air_data_source_enum: AirDataSource;
+      measurement_status_enum: MeasurementStatus;
     };
   };
 }
