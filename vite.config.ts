@@ -7,4 +7,18 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/api/fmp': {
+        target: 'https://financialmodelingprep.com/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/fmp/, ''),
+        secure: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      }
+    }
+  }
 });
